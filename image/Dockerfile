@@ -13,7 +13,18 @@ ENV BANNER="toolbox"
 ENV DOCKER_IMAGE="hajlesilesia/toolbox"
 ENV DOCKER_TAG="latest"
 
-# Add system-wide git safe directory to avoid ownership issues in the filesystem.
+# SSH server configuration for remote development
+RUN adduser \
+      --disabled-password \
+	  --comment "" \
+	  local_dev && \
+    echo "local_dev:local_dev" | chpasswd
+RUN apt-get update && apt-get install -y \
+	  openssh-server && \
+      service ssh start && \
+      service ssh status
+
+# System-wide git safe directory to avoid ownership issues in the filesystem.
 # Reasoning: in the remote (CI/CD workflows) or local usage of this image, the user cloning the repository will be different than the one operating on it.
 COPY .gitconfig /etc/gitconfig
 
@@ -37,5 +48,4 @@ ENV PATH="${MISE_DATA_DIR}/shims:$PATH"
 COPY .mise.toml /etc/mise/config.toml
 # Install tools
 # Source: https://mise.jdx.dev/cli/install.html
-RUN mise trust
-RUN mise install --yes
+RUN mise trust && mise install --yes
