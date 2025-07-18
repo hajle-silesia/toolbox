@@ -1,5 +1,5 @@
 [tools]
-atmos = '1.183.0'
+atmos = '1.183.1'
 helm = '3.18.4'
 k3s = '1.30.0+k3s1'
 kubeconform = '0.6.7'
