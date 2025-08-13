@@ -1,6 +1,6 @@
 [tools]
 atmos = '1.186.0'
-helm = '3.18.4'
+helm = '3.18.5'
 k3s = '1.30.0+k3s1'
 k9s = '0.50.9'
 kubeconform = '0.6.7'
