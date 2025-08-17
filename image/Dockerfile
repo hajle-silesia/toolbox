@@ -22,7 +22,8 @@ RUN adduser \
 RUN apt-get update && apt-get install -y \
 	  openssh-server && \
       service ssh start && \
-      service ssh status
+      service ssh status && \
+      echo "service ssh start" >> ~/.bashrc
 
 # System-wide git safe directory to avoid ownership issues in the filesystem.
 # Reasoning: in the remote (CI/CD workflows) or local usage of this image, the user cloning the repository will be different than the one operating on it.
