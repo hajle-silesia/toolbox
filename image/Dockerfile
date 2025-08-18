@@ -20,12 +20,12 @@ RUN adduser \
 	  local_dev && \
     echo "local_dev:local_dev" | chpasswd
 RUN apt-get update && apt-get install -y \
-	  openssh-server && \
+	  openssh-server \
       socat && \
-      service ssh start && \
-      service ssh status && \
-      echo "service ssh start" >> ~/.bashrc && \
-      socat TCP-LISTEN:35000,fork,reuseaddr TCP:localhost:30000 &
+    service ssh start && \
+    service ssh status && \
+    echo "service ssh start" >> ~/.bashrc && \
+    socat TCP-LISTEN:35000,fork,reuseaddr TCP:localhost:30000 &
 
 # System-wide git safe directory to avoid ownership issues in the filesystem.
 # Reasoning: in the remote (CI/CD workflows) or local usage of this image, the user cloning the repository will be different than the one operating on it.
