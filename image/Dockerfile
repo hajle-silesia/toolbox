@@ -21,11 +21,10 @@ RUN adduser \
     echo "local_dev:local_dev" | chpasswd
 RUN apt-get update && apt-get install -y \
 	  openssh-server \
-      socat && \
-    service ssh start && \
-    service ssh status && \
-    echo "service ssh start" >> ~/.bashrc && \
-    socat TCP-LISTEN:35000,fork,reuseaddr TCP:localhost:30000 &
+      socat \
+      docker.io && \
+    echo "socat TCP-LISTEN:\${GEODESIC_PORT},fork,reuseaddr TCP:localhost:30000 &" >> ~/.bashrc && \
+    echo "service ssh start" >> ~/.bashrc
 
 # System-wide git safe directory to avoid ownership issues in the filesystem.
 # Reasoning: in the remote (CI/CD workflows) or local usage of this image, the user cloning the repository will be different than the one operating on it.
@@ -45,7 +44,7 @@ RUN curl https://mise.run | \
     MISE_INSTALL_PATH="${MISE_INSTALL_PATH}" \
     MISE_DATA_DIR="${MISE_DATA_DIR}" \
     sh
-ENV PATH="${MISE_DATA_DIR}/shims:$PATH"
+ENV PATH="${MISE_DATA_DIR}/shims:${PATH}"
 # Defaults for all users
 # Source: https://mise.jdx.dev/configuration.html#system-config-etc-mise-config-toml
 COPY .mise.toml /etc/mise/config.toml
