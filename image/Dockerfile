@@ -4,7 +4,7 @@ ARG GEODESIC_REPOSITORY=cloudposse/geodesic
 ARG GEODESIC_TAG=4.5.0-debian
 
 # renovate: datasource=github-releases depName=jdx/mise
-ARG MISE_VERSION=v2025.12.13
+ARG MISE_VERSION=v2026.2.17
 
 FROM ${GEODESIC_REPOSITORY}:${GEODESIC_TAG}
 
